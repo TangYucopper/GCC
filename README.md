@@ -42,7 +42,7 @@ GCC is a **contrastive learning** framework that implements unsupervised structu
 
 - Linux with Python ≥ 3.6
 - [PyTorch ≥ 1.4.0](https://pytorch.org/)
-- [0.5 > DGL ≥ 0.4.1](https://www.dgl.ai/pages/start.html)
+- [0.5 > DGL ≥ 0.4.3](https://www.dgl.ai/pages/start.html)
 - `pip install -r requirements.txt`
 - Install [RDKit](https://www.rdkit.org/docs/Install.html) with `conda install -c conda-forge rdkit=2019.09.2`.
 
@@ -181,6 +181,14 @@ Server crashes/hangs after launching pretraining experiments.
 In addition to GPU, our pretraining stage requires a lot of computation resources, including CPU and RAM. If this happens, it usually means the CPU/RAM is exhausted on your machine. You can decrease `--num-workers` (number of dataloaders using CPU) and `--num-copies` (number of datasets copies residing in RAM). With the lowest profile, try `--num-workers 1 --num-copies 1`.
 
 If this still fails, please upgrade your machine :). In the meanwhile, you can still download our pretrained model and evaluate it on downstream tasks.
+</details>
+
+<details>
+<summary>
+Having difficulty installing RDKit.
+</summary>
+<br/>
+See the P.S. section in [this](https://github.com/THUDM/GCC/issues/12#issue-752080014) post.
 </details>
 
 ## Citing GCC
