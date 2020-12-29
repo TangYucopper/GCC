@@ -63,6 +63,7 @@ class GraphEncoder(nn.Module):
     ):
         super(GraphEncoder, self).__init__()
 
+        # Calculate the dims
         if degree_input:
             node_input_dim = positional_embedding_size + degree_embedding_size + 1
         else:
@@ -71,6 +72,8 @@ class GraphEncoder(nn.Module):
         #     positional_embedding_size + freq_embedding_size + degree_embedding_size + 3
         # )
         edge_input_dim = freq_embedding_size + 1
+
+        # Initialize model
         if gnn_model == "mpnn":
             self.gnn = UnsupervisedMPNN(
                 output_dim=output_dim,

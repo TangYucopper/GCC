@@ -480,10 +480,13 @@ def train_moco(
 
 # def main(args, trial):
 def main(args):
+    # Random Seeds
     dgl.random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed(args.seed)
+
+    # Resume checkpoint args
     if args.resume:
         if os.path.isfile(args.resume):
             print("=> loading checkpoint '{}'".format(args.resume))
@@ -504,8 +507,10 @@ def main(args):
             args = pretrain_args
         else:
             print("=> no checkpoint found at '{}'".format(args.resume))
-    args = option_update(args)
+    args = option_update(args) # Update the save folder, model name and tensorboard folder
     print(args)
+
+    # GPU setting
     assert args.gpu is not None and torch.cuda.is_available()
     print("Use GPU: {} for training".format(args.gpu))
     assert args.positional_embedding_size % 2 == 0
@@ -513,6 +518,8 @@ def main(args):
 
     mem = psutil.virtual_memory()
     print("before construct dataset", mem.used / 1024 ** 3)
+
+    # Finetuning ? Set up dataset
     if args.finetune:
         if args.dataset in GRAPH_CLASSIFICATION_DSETS:
             dataset = GraphClassificationDatasetLabeled(
@@ -572,6 +579,7 @@ def main(args):
                 positional_embedding_size=args.positional_embedding_size,
             )
 
+    # Construct dataloader
     mem = psutil.virtual_memory()
     print("before construct dataloader", mem.used / 1024 ** 3)
     train_loader = torch.utils.data.DataLoader(
